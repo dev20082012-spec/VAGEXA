@@ -9,17 +9,19 @@ The Rajasthan Police Hackathon 2026, run by R4C (Rajasthan Cyber Crime Control
 Centre), is the first milestone. The product aim is longer than that event: a
 maintainable system whose findings can be explained from source records.
 
-This repository currently holds the engineering foundation: product intent,
-architecture, data design, security and evidence rules, the licence placeholder,
-and the implementation roadmap. The application itself has not been started.
+The hackathon demonstration is the synthetic case `SYN-DEMO` at
+https://vagexa-rj-demo.fly.dev. Sign-in instructions are in
+[Access instructions](docs/HACKATHON_ACCESS_INSTRUCTIONS.md). The password is
+not stored in this repository. A judge-facing summary is in
+[submission/README.md](submission/README.md).
 
 ## Status
 
 | Item | State |
 | --- | --- |
-| Application code | Foundation and case register. See [Implementation status](docs/IMPLEMENTATION_STATUS.md). |
-| Database | Identity, cases, and audit migrated. Transactions are not created yet. |
-| Runnable demo | Sign-in and case create/retrieve. No fund tracing. |
+| Public demonstration | https://vagexa-rj-demo.fly.dev, synthetic mode, verified 2026-11-22 |
+| Deployed commit | `677b4f2`, subject `15-live deploy` |
+| Primary case | `SYN-DEMO`, generator `demo.v2` |
 | Copyright owner | `[COPYRIGHT OWNER TO BE CONFIRMED]` |
 | Licence | Proprietary. All rights reserved. Not open source. |
 | Data in the repository | None. No statements, complaints, or secrets. |
@@ -145,6 +147,7 @@ From `frontend`: `npm run lint`, `npm run format:check`, `npm run typecheck`, `n
 
 ## Next engineering task
 
-The hackathon frontend workspace for `SYN-DEMO`, then a public deployment.
-See [Hackathon remaining work](docs/HACKATHON_REMAINING_WORK.md). The system
-is not production-ready.
+The public demonstration is up. Remaining submission work is the team's
+action-plan presentation and portal registration, recorded in
+[Release readiness](docs/HACKATHON_RELEASE_READINESS.md). The live host is a
+single synthetic demonstration machine, not an operational deployment.
