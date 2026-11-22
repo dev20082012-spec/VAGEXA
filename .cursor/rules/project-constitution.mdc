@@ -1,0 +1,39 @@
+---
+description: Non-negotiable investigative, evidence, and engineering rules for VAGEXA
+alwaysApply: true
+---
+
+# VAGEXA constitution
+
+VAGEXA helps authorised investigators examine financial-crime networks. It is proprietary. An indicator, a path, or a paragraph is a lead, not a finding of guilt.
+
+If a change conflicts with this rule, stop and add an ADR under `docs/decisions/` before writing the feature.
+
+## Evidence
+
+- Never invent a transaction, account, domain, IP, relationship, or narrative finding.
+- Mark synthetic data `synthetic`. A deployment in `operational` mode must reject it.
+- Every relationship has provenance and exactly one of `verified`, `inferred`, or `hypothesis`.
+- `verified` means a cited field in a source record states the claim. It does not mean a court has proved it.
+- Store the method name and version on every inference. A score without that method is not a result.
+- The copilot may narrate tool output. It must not create entities, amounts, or edges.
+- A report includes its limitations and the evidence identifiers it relies on.
+
+## Engineering
+
+- Keep tracing, matching, scoring, and classification rules out of HTTP handlers and React components. Put them in tested domain modules.
+- PostgreSQL is the system of record. A graph library holds a derived view.
+- Prefer a pure function and the existing database over a new service or dependency.
+- Do not log or commit secrets, session tokens, full account numbers, UPI VPAs, or complaint text.
+- Do not copy real case files into the repository, fixtures, or prompts.
+
+## Example
+
+```text
+Rejected:  is_mule = true because fan_out > 8
+Required:  indicator PASS_THROUGH, method indicators.v1,
+           support_transaction_ids [...], assertion_kind inferred,
+           limitation "rule match on supplied statements only"
+```
+
+Read `docs/EVIDENCE_AND_PROVENANCE.md` before changing analytical behaviour.

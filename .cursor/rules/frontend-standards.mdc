@@ -1,0 +1,40 @@
+---
+description: React and TypeScript rules for the VAGEXA investigator client
+globs: frontend/**/*.ts,frontend/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend standards
+
+Vite, React, TypeScript, React Router, and TanStack Query. The client is an investigator workspace, not a marketing site.
+
+## The client does not decide facts
+
+```tsx
+// Rejected: the screen invents a conclusion
+const guilty = account.fanOut > 8;
+<span>{guilty ? "Mule" : "Clean"}</span>
+
+// Required: render the server's assertion and its support
+<Indicator
+  code={item.code}
+  assertionKind={item.assertion_kind}
+  method={item.method_version}
+  supportCount={item.support_ids.length}
+/>
+```
+
+## Interface rules
+
+- Keep a visible data-classification banner on every case view. Synthetic mode is unmistakable.
+- Encode assertion kind by line pattern and a text label: solid `verified`, dashed `inferred`, dotted `hypothesis`. Colour alone must not carry that meaning.
+- Show amounts from API strings. Do not coerce them through `Number` before display.
+- Mask account numbers and VPAs in compact lists. The full value is loaded from the account endpoint, which is already case-authorised. Do not put a second copy of the number in client logs or analytics.
+- Send the investigator's question to the copilot endpoint. Do not call a model vendor from the browser.
+- Empty, loading, and error states are part of the case, graph, and upload screens.
+- Case switching must not leave the previous case's transactions, graph, or copilot answer on screen.
+
+## Structure
+
+- Feature folders under `frontend/src/features/`. Shared HTTP types under `frontend/src/api/`.
+- No tracing, clustering, or entity-resolution algorithm in the client.

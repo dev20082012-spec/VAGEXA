@@ -1,0 +1,52 @@
+VAGEXA NOTICE
+
+Copyright status
+----------------
+Original VAGEXA software and documentation (when created):
+
+    Copyright (c) 2026 [COPYRIGHT OWNER TO BE CONFIRMED]. All rights reserved.
+
+The copyright owner is a placeholder. A git remote, a GitHub handle, or an
+email address is not a legal owner. Confirm ownership in writing and then
+replace "[COPYRIGHT OWNER TO BE CONFIRMED]" in LICENSE, this file, README.md,
+and docs/decisions/0009-proprietary-licence-placeholder.md.
+
+This project is proprietary. It is not released under MIT, Apache, GPL, or
+any other open-source licence.
+
+Third-party material
+--------------------
+No third-party libraries, datasets, or source files are vendored in this
+repository at the date of this notice.
+
+When a dependency or an external excerpt is added, record it here:
+
+| Material | Source | Licence or terms | How it is used |
+| --- | --- | --- | --- |
+| (none yet) |  |  |  |
+
+Do not remove upstream copyright notices from third-party material.
+Do not relicense third-party material under this proprietary notice.
+
+External facts cited by the documentation
+------------------------------------------
+The engineering docs refer to the public description of the Rajasthan Police
+Hackathon 2026, organised by R4C (Rajasthan Cyber Crime Control Centre).
+That event's problem statements, sample data, marks, and website remain the
+organisers' material. This repository cites them. It does not claim them.
+
+Hackathon and contributor agreements
+------------------------------------
+Before any submission or public demonstration, review:
+
+- the hackathon intellectual-property terms;
+- contributor ownership, including whether students, a college, or another
+  party already has a claim;
+- whether a written agreement is required before more people contribute.
+
+Investigative data
+------------------
+This repository must not contain real bank statements, complaint extracts,
+credentials, or other operational records. Synthetic data, when added later,
+must be labelled synthetic and must ship with a separate ground-truth file
+used for tests.

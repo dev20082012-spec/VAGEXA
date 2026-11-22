@@ -1,0 +1,37 @@
+---
+description: Money, statement ingestion, layering, and indicator rules for VAGEXA
+globs: backend/**/financial/**/*.py,backend/**/parsers/**/*.py,backend/**/ingestion/**/*.py,backend/**/domain/**/*.py
+alwaysApply: false
+---
+
+# Financial data standards
+
+Indian payment rails in scope: UPI, IMPS, NEFT, RTGS, cash, cheque, card, internal transfer, and `unknown`. Account identity is account number plus IFSC, or a UPI VPA. Do not treat IBAN as the default key.
+
+## Amounts
+
+```python
+# Rejected
+amount = float(row["amount"])
+
+# Required: exact, and do not invent precision
+from decimal import Decimal
+raw = Decimal(row["amount"])
+if raw.as_tuple().exponent < -4:
+    raise InvalidAmount("more than four decimal places")
+amount = raw
+```
+
+- Store a positive `amount` and a `direction` of `debit` or `credit`.
+- Keep the source currency. Do not assume a conversion rate.
+- A date-only statement row stays a date. Do not invent a clock time.
+- Preserve `narration_raw`. Extract a VPA or UTR only with a named extractor version. An ambiguous digit string stays unresolved.
+
+## Tracing and indicators
+
+- Layer numbers belong to a trace run, not to the account row. Layer 1 received the seed. Layer 2 received onward value from layer 1. Layer 3 is the next hop. The default horizon is 3 and the hard cap is 5.
+- The default allocation policy is FIFO, versioned on the run. Pro-rata is a different policy, not a silent fallback.
+- A hop created from a structured counterparty field is `verified` against that statement. An amount-and-time match stays a candidate until an investigator confirms it. A name similarity is a `hypothesis` and does not allocate money.
+- If the onward statement is absent, end the path and say so. A cash withdrawal sets `exit_kind = cash` and a null destination. It does not invent a recipient.
+- Emit indicators such as `PASS_THROUGH`, `FAN_IN`, and `FAN_OUT` with support transaction ids. Never persist `is_mule` or `is_guilty`.
+- At each account, attributed outflow cannot exceed attributed inflow for that complaint and currency by more than 0.01. Do not sum every hop and compare that total with the seed. Failing the check fails the run.

@@ -1,0 +1,76 @@
+VAGEXA PROPRIETARY LICENCE
+
+Copyright (c) 2026 [COPYRIGHT OWNER TO BE CONFIRMED]. All rights reserved.
+
+VAGEXA is intended to be proprietary software. This document is an All Rights
+Reserved notice. It is not a grant of an open-source licence. The names MIT,
+Apache, GPL, and any other open-source licence do not apply to original
+VAGEXA material.
+
+1. Placeholder status
+
+The copyright owner has not been legally confirmed. The marker
+"[COPYRIGHT OWNER TO BE CONFIRMED]" is a placeholder. It is not a natural
+person, a company, or a government body.
+
+Until that placeholder is replaced, in a recorded decision, with the legal
+name of the owner:
+
+- this notice states the project's intention to reserve all rights;
+- it does not by itself create, assign, or transfer ownership;
+- it does not authorise use, copying, modification, publication, distribution,
+  sublicensing, or sale of original VAGEXA material.
+
+2. Intended reservation of rights
+
+Once a copyright owner is confirmed, the intended terms are:
+
+No permission is granted to use, copy, modify, merge, publish, distribute,
+sublicense, or sell the software or its original documentation except under a
+separate written authorisation from that copyright owner.
+
+3. What this notice does not cover
+
+This notice does not claim ownership of:
+
+- third-party libraries, fonts, models, or tools;
+- datasets or records supplied by a bank, a complainant, a registry, or any
+  other external source;
+- problem statements, sample data, or marks belonging to a hackathon organiser
+  or any other organisation.
+
+Those materials remain subject to their own terms. None are vendored in this
+repository at the time this notice was written.
+
+4. Required review before any release or submission
+
+Before a public release, a hackathon submission, a demonstration to an
+external party, or any other distribution, the contributors must review:
+
+- the applicable hackathon or event intellectual-property terms;
+- who owns contributor work, and whether a written contributor agreement is
+  required;
+- whether any third-party or externally sourced material has been included;
+- whether the repository visibility matches the proprietary intention.
+
+If an event's terms conflict with this notice, stop and resolve that conflict
+before submitting. Do not assume this placeholder notice overrides an
+organisers' contract.
+
+5. Investigative outputs
+
+Software in this project is an investigative aid. Indicators, graphs, scores,
+and generated text are not determinations of guilt, identity, or liability.
+
+6. Warranty
+
+To the extent permitted by law, the software and documentation are provided
+as-is, without warranty of any kind, express or implied, including warranties
+of accuracy, fitness for a particular investigative purpose, and
+non-infringement.
+
+7. How to confirm the owner
+
+Replace the placeholder only when a responsible person records the legal name
+of the owner in NOTICE and in docs/decisions/. Do not guess the owner from a
+git username, an email address, or a GitHub handle.

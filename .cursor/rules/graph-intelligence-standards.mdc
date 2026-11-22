@@ -1,0 +1,36 @@
+---
+description: Bounded graph projection, assertion kinds, and entity-resolution rules
+globs: backend/**/graph/**/*.py,backend/**/correlation/**/*.py,backend/**/digital/**/*.py
+alwaysApply: false
+---
+
+# Graph intelligence standards
+
+The graph is a derived view of relational facts. PostgreSQL remains the system of record. Rebuild the view; do not edit it in place to "fix" a case.
+
+## Bounds and kinds
+
+```python
+# Rejected: unbounded paths, user text passed into a query language
+nx.all_simple_paths(graph, source, target)
+session.run(user_supplied_cypher)
+
+# Required: a case-scoped load and an explicit hop cap
+subgraph = load_case_subgraph(case_id, focus_id, max_hops=3)
+paths = nx.all_simple_paths(subgraph, source, target, cutoff=3)
+```
+
+- Default `max_hops` is 3. Refuse a request above 5.
+- Every edge carries `assertion_kind`, `method`, and at least one evidence or provenance id.
+- `verified`, `inferred`, and `hypothesis` stay visually and structurally distinct. Do not collapse them to make a picture simpler.
+- Phase 1 cluster output is a connected component. Do not label a component as a criminal network or a community.
+- A shared name does not merge two parties. A merge is an investigator decision stored as `same_as`, and it is reversible by a later decision. Do not delete the underlying accounts.
+- A shared IP, nameserver, or host is an overlap edge with a limitation. It does not create a party and it does not mean common ownership.
+
+## Cross-case results
+
+- Return the shared identifier, its kind, and a count of other cases to a user who cannot open those cases.
+- Return the other case's title, narrative, or complainant only when that user is assigned to it or holds cross-case read permission.
+- Audit the lookup.
+
+Cypher, if a later ADR introduces Neo4j, is written inside the graph adapter. It is never accepted from the client or from a model.

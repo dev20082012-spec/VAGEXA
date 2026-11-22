@@ -1,0 +1,39 @@
+---
+description: Python service boundaries, errors, and persistence rules for the VAGEXA API and worker
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Backend standards
+
+Python 3.12, FastAPI, Pydantic v2, SQLAlchemy 2, Alembic. The worker is `python -m vagexa.worker` in the same package.
+
+## Handlers stay thin
+
+```python
+# Rejected: matching logic inside the route
+@router.post("/cases/{case_id}/traces")
+def trace(case_id: UUID, body: TraceIn, db: Session = Depends(get_db)):
+    rows = db.execute(text("select * from transactions")).all()
+    return fifo(rows)
+
+# Required: the route authorises and calls one use case
+@router.post("/cases/{case_id}/traces", status_code=202)
+def trace(case_id: UUID, body: TraceIn, ctx: Investigator = Depends(require_case)):
+    return traces.enqueue(ctx, case_id, body)
+```
+
+## Persistence and money
+
+- Identify cases in every query. Do not trust an object id alone.
+- Commit normalised transactions and their provenance in one database transaction. A failed parse leaves no partial rows.
+- Use `Decimal` in domain code and `Numeric(20, 4)` in PostgreSQL. Reject values with more than four decimal places.
+- Serialise amounts as strings in JSON.
+- Insert evidence, provenance, analytical runs, and audit events. Do not update or delete them in application code.
+- Job payloads contain identifiers, not file bytes and not narration text.
+
+## Errors and logs
+
+- Return `application/problem+json` with `request_id`.
+- Log parser name, statement id, and a redacted account suffix. Do not log narration, VPA, or a full account number.
+- Map an unexpected exception to a generic 500. Leave the detail in the server log without source data.

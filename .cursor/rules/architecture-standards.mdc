@@ -1,0 +1,44 @@
+---
+description: VAGEXA module boundaries, stack choices, and where decisions are recorded
+alwaysApply: true
+---
+
+# Architecture standards
+
+Follow the accepted ADRs in `docs/decisions/`. A reversal is a new ADR, not a silent new library.
+
+## Layout to create when implementation starts
+
+```text
+backend/src/vagexa/
+  api/                HTTP adapters only
+  application/        use cases and unit-of-work boundaries
+  domain/             pure rules: money, layers, assertions
+  intelligence/
+    financial/ graph/ digital/ correlation/ copilot/
+  evidence/
+  adapters/
+    persistence/ parsers/ passive_intel/ llm/ jobs/
+  worker/
+frontend/src/         React + TypeScript. No tracing rules.
+```
+
+`intelligence/digital` is the domain, DNS, and IP engine. Technical adapters live under `adapters/`. Do not create a second package named `infrastructure`.
+
+## Boundaries
+
+- Routers validate, authenticate, authorise, and map errors. They do not match transactions.
+- The React client renders server results. Amounts arrive as decimal strings.
+- Case-scoped graph work loads a bounded subgraph and runs NetworkX in process.
+- Do not add Neo4j, Redis, Celery, or a Node.js server unless an ADR says the recorded trigger is met.
+- JSON field names and Python identifiers use American spelling (`authorization`, `normalized`). User-facing copy uses British spelling.
+
+## Change control
+
+```text
+Rejected:  a new graph database "because fraud systems use one"
+Required:  ADR with the scale trigger, the sync direction
+           (PostgreSQL -> derived graph), and the rollback path
+```
+
+New persistent fields that affect evidence belong in `docs/DATABASE_DESIGN.md` in the same change.
